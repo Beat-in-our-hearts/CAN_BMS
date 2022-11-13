@@ -117,7 +117,7 @@ I (..\..\SRC\StdPeriphDriver\inc\ch32f10x_wwdg.h)(0x61EE5404)
 I (..\..\SRC\StdPeriphDriver\inc\ch32f10x_misc.h)(0x61EE53DA)
 I (D:\Program Files (x86)\mdk5\ARM\ARMCC\include\stdio.h)(0x5CEB79E2)
 I (OLED\oledfont.h)(0x636F0C67)
-F (.\Src\BPS_adc.c)(0x63705557)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\..\SRC\StdPeriphDriver\inc -I ..\..\SRC\CMSIS -I ..\..\SRC\Debug -I ..\Main -I .\OLED -I .\Inc-I.\RTE\_CH32F10x-I"D:\Program Files (x86)\mdk5\Keil\WCH32F1xx_DFP\1.0.1\Device\Include"-I"D:\Program Files (x86)\mdk5\ARM\CMSIS\Include"-D__UVISION_VERSION="528"-o .\obj\bps_adc.o --omf_browse .\obj\bps_adc.crf --depend .\obj\bps_adc.d)
+F (.\Src\BPS_adc.c)(0x63708676)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\..\SRC\StdPeriphDriver\inc -I ..\..\SRC\CMSIS -I ..\..\SRC\Debug -I ..\Main -I .\OLED -I .\Inc-I.\RTE\_CH32F10x-I"D:\Program Files (x86)\mdk5\Keil\WCH32F1xx_DFP\1.0.1\Device\Include"-I"D:\Program Files (x86)\mdk5\ARM\CMSIS\Include"-D__UVISION_VERSION="528"-o .\obj\bps_adc.o --omf_browse .\obj\bps_adc.crf --depend .\obj\bps_adc.d)
 I (.\Inc\BPS_adc.h)(0x636FAD84)
 I (..\..\SRC\Debug\debug.h)(0x636FA6B7)
 I (..\..\SRC\StdPeriphDriver\inc\ch32f10x.h)(0x6370540E)
