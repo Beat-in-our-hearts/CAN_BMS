@@ -29,28 +29,28 @@ void BPS_CAN_Base_Init(void)
     CAN_InitSturcture.CAN_NART = ENABLE;        // 禁止报文自动传送
     CAN_InitSturcture.CAN_RFLM = DISABLE;       // 报文不锁定，新的会覆盖
     CAN_InitSturcture.CAN_TXFP = DISABLE;       // 优先级由报文flag决定
-    CAN_InitSturcture.CAN_Mode = CAN_Base_Mode; // 0：普通模式 1：回环模式
+    CAN_InitSturcture.CAN_Mode = CAN_BASE_MODE; // 0：普通模式 1：回环模式
     CAN_InitSturcture.CAN_SJW  = CAN_SJW_TQ;    // 重新同步跳跃宽度
     // CAN_InitSturcture.CAN_BS1 = tbs1;        // 时间段1 占用时间
     // CAN_InitSturcture.CAN_BS2 = tbs2;        // 时间段2 占用时间
     // CAN_InitSturcture.CAN_Prescaler = brp;   // 分频系数
-#if (CAN_BPS_Mode == CAN_BPS_100Kbps)
+#if (CAN_BPS_MODE == CAN_BPS_100Kbps)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_8tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_6tq;
     CAN_InitSturcture.CAN_Prescaler = 24;
-#elif (CAN_BPS_Mode == CAN_BPS_200Kbps)
+#elif (CAN_BPS_MODE == CAN_BPS_200Kbps)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_5tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_4tq;
     CAN_InitSturcture.CAN_Prescaler = 18;
-#elif (CAN_BPS_Mode == CAN_BPS_250Kbps)
+#elif (CAN_BPS_MODE == CAN_BPS_250Kbps)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_6tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_5tq;
     CAN_InitSturcture.CAN_Prescaler = 12;
-#elif (CAN_BPS_Mode == CAN_BPS_500Kbps)
+#elif (CAN_BPS_MODE == CAN_BPS_500Kbps)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_6tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_5tq;
     CAN_InitSturcture.CAN_Prescaler = 6;
-#elif (CAN_BPS_Mode == CAN_BPS_1000Kbps)
+#elif (CAN_BPS_MODE == CAN_BPS_1000Kbps)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_9tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_8tq;
     CAN_InitSturcture.CAN_Prescaler = 2;
@@ -120,7 +120,7 @@ uint8_t BPS_CAN_Receive_Msg(uint8_t* buf)
 void BPS_CAN_NVIC_Config(void)
 {
     NVIC_InitTypeDef NVIC_InitStructure = {0};
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
     NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;  // TIM3 global Interrupt
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;   // 占先优先级：1
@@ -138,18 +138,7 @@ void BPS_CAN_Init(void)
     BPS_CAN_NVIC_Config();  // 中断管理
 }
 
-void USB_LP_CAN1_RX0_IRQHandler(void)
-{
-    uint8_t i = 0;
-    static uint8_t can_test_buffer[8] ={0};
-    CanRxMsg CanRxStructure = {0};
-    CAN_Receive(CAN1, CAN_FIFO0, &CanRxStructure);
-    for( i = 0; i < 8; i++ ){
-        can_test_buffer[i] = CanRxStructure.Data[i];
-    }
-    BPS_CAN_Send_Msg(can_test_buffer,8);
-    // CanRxStructure.Data[i] 8 字节消息
-}
+
 
 
 void BPS_CAN_Read_ID(void)

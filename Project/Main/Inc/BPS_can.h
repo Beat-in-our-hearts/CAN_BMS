@@ -5,7 +5,7 @@
 #include "BPS_global_define.h"
 
 // Bps =Fpclk1/((tpb1+1+tbs2+1+1)*brp) = 36M 
-#define CAN_BPS_Mode        CAN_BPS_250Kbps
+#define CAN_BPS_MODE        CAN_BPS_250Kbps
 #define CAN_BPS_100Kbps     1
 #define CAN_BPS_200Kbps     2
 #define CAN_BPS_250Kbps     3
@@ -14,7 +14,7 @@
 
 #define CAN_SJW_TQ         CAN_SJW_1tq 
 
-#define CAN_Base_Mode      CAN_Mode_Normal // CAN_Mode_LoopBack CAN_Mode_Silent CAN_Mode_Silent_LoopBack
+#define CAN_BASE_MODE      CAN_Mode_Normal // CAN_Mode_LoopBack CAN_Mode_Silent CAN_Mode_Silent_LoopBack
 
 extern uint16_t CAN_ID;
 

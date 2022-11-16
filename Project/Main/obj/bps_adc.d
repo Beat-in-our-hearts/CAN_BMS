@@ -29,3 +29,4 @@
 .\obj\bps_adc.o: ..\..\SRC\StdPeriphDriver\inc\ch32f10x_misc.h
 .\obj\bps_adc.o: D:\Program Files (x86)\mdk5\ARM\ARMCC\Bin\..\include\stdio.h
 .\obj\bps_adc.o: .\Inc\BPS_global_define.h
+.\obj\bps_adc.o: .\Inc\BPS_gpio.h

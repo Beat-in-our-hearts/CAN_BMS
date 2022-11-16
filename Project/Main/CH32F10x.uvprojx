@@ -417,6 +417,21 @@
               <FileType>1</FileType>
               <FilePath>.\Src\BPS_can.c</FilePath>
             </File>
+            <File>
+              <FileName>BPS_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\BPS_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>BPS_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\BPS_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>BPS_global_define.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\BPS_global_define.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

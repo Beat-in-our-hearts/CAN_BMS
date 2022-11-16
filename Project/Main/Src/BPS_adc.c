@@ -1,7 +1,9 @@
 #include "BPS_adc.h"
 
 int16_t Calibrattion_Val = 0;
-int16_t ADC_Buffer[Used_ADC_NbrOfChannel] = {0};
+uint16_t ADC_Buffer[ADC_NBR_OF_CHANNEL] = {0};
+uint16_t ADC_Offset_Buffer[ADC_NBR_OF_CHANNEL] = {0};
+uint8_t ADC_Offset_Check_Flag = 0;  
 
 void BPS_ADC_Base_Init(void)
 {
@@ -30,7 +32,7 @@ void BPS_ADC_Base_Init(void)
     ADC_InitStructure.ADC_ScanConvMode = ENABLE;                        // Scan enable 多通道模式
     ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;                  // 连续转换模式
     ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None; // 软件触发
-    ADC_InitStructure.ADC_NbrOfChannel = Used_ADC_NbrOfChannel;         // 使用的通道总数
+    ADC_InitStructure.ADC_NbrOfChannel = ADC_NBR_OF_CHANNEL;            // 使用的通道总数
     ADC_Init(ADC1, &ADC_InitStructure);                                 // init adc
 
     // init RegularChannel 规则采集顺序
@@ -67,12 +69,12 @@ void BPS_DMA_ADC_Tx_Init(void)
     DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&ADC1->RDATAR;         // 外设地址：ADC规则数据寄存器
     DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)ADC_Buffer;                // 内存地址
     DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;                          // 传输方向：外设到内存
-    DMA_InitStructure.DMA_BufferSize = Used_ADC_NbrOfChannel;                   // DMA 缓存大小
+    DMA_InitStructure.DMA_BufferSize = ADC_NBR_OF_CHANNEL;                      // DMA 缓存大小
     DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;            // 外设地址不变
     DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;                     // 内存地址增
     DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord; // 外设：半字 16位
     DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;         // 内存：半字 16位
-    DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;                             // DMA_Mode_Normal;            // 设置DMA循环模式
+    DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;                             // DMA_Mode_Normal 设置DMA循环模式
     DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;                     // DMA优先级
     DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;                                // 内存到内存：不使用
     DMA_Init(DMA1_Channel1, &DMA_InitStructure);
@@ -85,13 +87,13 @@ void BPS_DMA_ADC_Tx_Init(void)
 void BPS_ADC_NVIC_Config(void)
 {
     NVIC_InitTypeDef NVIC_InitStructure = {0};
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
-    // NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;           // TIM3 global Interrupt
-    // NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; // 占先优先级：0
-    // NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;        // 抢占优先级
-    // NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;           // 中断使能
-    // NVIC_Init(&NVIC_InitStructure);
+    //// NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;           // TIM3 global Interrupt
+    //// NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; // 占先优先级：0
+    //// NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;        // 抢占优先级
+    //// NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;           // 中断使能
+    //// NVIC_Init(&NVIC_InitStructure);
 
     NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel1_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
@@ -102,48 +104,57 @@ void BPS_ADC_NVIC_Config(void)
 
 void BPS_ADC_Init(void)
 {
+    ADC_Offset_Check_Flag = BPS_Check_All_Channel_Reset(&CAN_BMS_Info);
     BPS_ADC_NVIC_Config();
     BPS_DMA_ADC_Tx_Init();
     BPS_ADC_Base_Init();
-    // BPS_Set_ADC_Freq();
+    //// BPS_Set_ADC_Freq();
 }
+
 
 void BPS_Get_Float_ADC(uint16_t *buf, float *res)
 {
-    uint8_t i = 0;
-    for(i = 0; i < Used_ADC_NbrOfChannel - 1; ++i)
-        res[i] = 3.3f * buf[i] / 4096.0f / Current_Gain / Current_R;
-    res[i] = 3.3f * buf[i] / 4096.0f * V_Total_R / V_R2;
+    res[0] = 3.3f * (buf[0] - ADC_Offset_Buffer[0])  / 4096.0f / CURRENT_GAIN / CURRENT_R1;
+    res[1] = 3.3f * (buf[1] - ADC_Offset_Buffer[1])  / 4096.0f / CURRENT_GAIN / CURRENT_R2;
+    res[2] = 3.3f * (buf[2] - ADC_Offset_Buffer[2])  / 4096.0f / CURRENT_GAIN / CURRENT_R3;
+    res[3] = 3.3f * (buf[3] - ADC_Offset_Buffer[3])  / 4096.0f / CURRENT_GAIN / CURRENT_R4;
+    res[4] = 3.3f * (buf[4] - ADC_Offset_Buffer[4])  / 4096.0f / CURRENT_GAIN / CURRENT_R5;
+    res[5] = 3.3f * (buf[5] - ADC_Offset_Buffer[5])  / 4096.0f / CURRENT_GAIN / CURRENT_R6;
+    res[6] = 3.3f * (buf[6] - ADC_Offset_Buffer[6])  / 4096.0f / CURRENT_GAIN / CURRENT_R7;
+    res[7] = 3.3f * (buf[7] - ADC_Offset_Buffer[7])  / 4096.0f / CURRENT_GAIN / CURRENT_R8;
+    res[8] = 3.3f * (buf[8] - ADC_Offset_Buffer[8])  / 4096.0f * VBUS_KP;
 }
-
-
-
-void BPS_Count_Power(float *adc_res, float deleta_t, folat *power_res)
-{
-    uint8_t i = 0;
-    for(i = 0; i < Used_ADC_NbrOfChannel - 1; ++i)
-        power_res[i] =  adc_res[i] * adc_res[Used_ADC_NbrOfChannel -1] / deleta_t;
-}
-
-
 
 
 
 void DMA1_Channel1_IRQHandler(void)
 {
     static uint32_t cnt = 0;
-    
+    static uint32_t sum_offset[ADC_NBR_OF_CHANNEL] = {0};
+    static uint8_t i = 0;
     if (DMA_GetITStatus(DMA1_IT_TC1)) // 传输完成中断
     {
         DMA_ClearITPendingBit(DMA1_IT_GL1); //清除全部中断标志
         // 可以进行数字滤波
-
-
-
+        if(cnt < 100 && ADC_Offset_Check_Flag)
+        {   
+            for(i = 0; i < ADC_NBR_OF_CHANNEL; ++i)
+            {
+                sum_offset[i] += ADC_Buffer[i];
+            }
+            cnt ++;
+        }
+        else if(cnt == 100)
+        {
+            for(i = 0; i < ADC_NBR_OF_CHANNEL; ++i)
+            {
+                ADC_Offset_Buffer[i] = sum_offset[i] / 100;
+            }
+        }
 
         // cnt++;
         // if(cnt == 10000)
-        //     // GPIO_SetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH6_Pin);
+        // //     GPIO_SetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH6_Pin);
     }
 }
 
