@@ -23,7 +23,7 @@ void BPS_Contorl_IO_Init(void)
 
     // Reset All the Channel 
     for(i = 0; i < 8 ; ++i)
-        BPS_Set_Contorl_IO_Status(&CAN_BMS_Info, i, DISABLE);
+        BPS_Set_Contorl_IO_Status(&CAN_BMS_Info, i, OFF);
 }
 
 
@@ -136,7 +136,7 @@ uint8_t BPS_Check_All_Channel_Reset(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomati
     uint8_t i = 0;
     for(i = 0; i < 8; ++i)
     {
-        if(CAN_BMS_Infomation->Channel_State[i] == 1)
+        if(CAN_BMS_Infomation->CH[i].state != OFF)
             return 0;
     }
     return 1;

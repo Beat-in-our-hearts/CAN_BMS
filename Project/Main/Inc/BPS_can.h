@@ -18,7 +18,7 @@
 
 extern uint8_t CAN_ID;
 
-uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t msg, uint8_t len);  // 发送消息
+uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t* msg, uint8_t len);  // 发送消息
 uint8_t BPS_CAN_Receive_Msg(uint8_t* buf);          // 检查是否存在消息并接受，非阻塞
 void BPS_CAN_Base_Init(void);                       // CAN GPIO 重映射 模式选择 滤波器设置
 void BPS_CAN_NVIC_Config(void);                     // 中断服务

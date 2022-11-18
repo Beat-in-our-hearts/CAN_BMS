@@ -6,26 +6,26 @@ void BPS_Protection_Policy_Check(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation
     uint8_t current_flag = 0, power_flag = 0, low_voltage_flag = 0, high_voltage_flag = 0;
     for(i = 0; i < OUTPUT_CHANNEL; ++i) 
     {
-        current_flag = (Protection_Policy[i] & 0x11000000)>>6;
-        power_flag = (Protection_Policy[i] & 0x00110000)>>4;
-        low_voltage_flag = (Protection_Policy[i] & 0x00001100)>>2;
-        high_voltage_flag = Protection_Policy[i] & 0x00000011;
+        current_flag = (CAN_BMS_InfomationStructure->Protection_Policy[i] & 0x11000000)>>6;
+        power_flag = (CAN_BMS_InfomationStructure->Protection_Policy[i] & 0x00110000)>>4;
+        low_voltage_flag = (CAN_BMS_InfomationStructure->Protection_Policy[i] & 0x00001100)>>2;
+        high_voltage_flag = CAN_BMS_InfomationStructure->Protection_Policy[i] & 0x00000011;
         switch (current_flag)
         {
         case None_Policy:
-            if(CAN_BMS_InfomationStructure->current_voltage_buffer[i] > Channel_Max_Current[i])
+            if(CAN_BMS_InfomationStructure->CH[i].real_time_current > CAN_BMS_InfomationStructure->Channel_Max_Current[i])
             {
                 BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, OverCurrentOn);
             }
             break;
         case Trip_Policy:
-            if(CAN_BMS_InfomationStructure->current_voltage_buffer[i] > Channel_Max_Current[i])
+            if(CAN_BMS_InfomationStructure->CH[i].real_time_current > CAN_BMS_InfomationStructure->Channel_Max_Current[i])
             {
                 BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, OverCurrentOFF);
             }
             break;
         case Trip_Recover_Policy:
-            if(CAN_BMS_InfomationStructure->current_voltage_buffer[i] > Channel_Max_Current[i])
+            if(CAN_BMS_InfomationStructure->CH[i].real_time_current > CAN_BMS_InfomationStructure->Channel_Max_Current[i])
             {
                 BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, OverCurrentOFF);
             }
@@ -37,19 +37,19 @@ void BPS_Protection_Policy_Check(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation
         switch (power_flag)
         {
         case None_Policy:
-            if(CAN_BMS_InfomationStructure->instantaneous_power[i] > Channel_Max_Power[i])
+            if(CAN_BMS_InfomationStructure->CH[i].read_time_power > CAN_BMS_InfomationStructure->Channel_Max_Power[i])
             {
                 BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, OverPowerOn);
             }
             break;
         case Trip_Policy:
-            if(CAN_BMS_InfomationStructure->instantaneous_power[i] > Channel_Max_Power[i])
+            if(CAN_BMS_InfomationStructure->CH[i].read_time_power > CAN_BMS_InfomationStructure->Channel_Max_Power[i])
             {
                 BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, OverPowerOFF);
             }
             break;
         case Trip_Recover_Policy:
-            if(CAN_BMS_InfomationStructure->instantaneous_power[i] > Channel_Max_Power[i])
+            if(CAN_BMS_InfomationStructure->CH[i].read_time_power > CAN_BMS_InfomationStructure->Channel_Max_Power[i])
             {
                 BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, OverPowerOFF);
             }
@@ -61,19 +61,19 @@ void BPS_Protection_Policy_Check(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation
         switch (low_voltage_flag)
         {
             case None_Policy:
-                if(CAN_BMS_InfomationStructure->current_voltage_buffer[ADC_NBR_OF_CHANNEL-1] < Channel_Min_Max_Voltage[0])
+                if(CAN_BMS_InfomationStructure->battery_voltage < CAN_BMS_InfomationStructure->Min_Max_Voltage[0])
                 {
                     BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, ON);
                 }
                 break;
             case Trip_Policy:
-                if(CAN_BMS_InfomationStructure->current_voltage_buffer[ADC_NBR_OF_CHANNEL-1] < Channel_Min_Max_Voltage[0])
+                if(CAN_BMS_InfomationStructure->battery_voltage < CAN_BMS_InfomationStructure->Min_Max_Voltage[0])
                 {
                     BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, LowVoltageOFF);
                 }
                 break;
             case Trip_Recover_Policy:
-                if(CAN_BMS_InfomationStructure->current_voltage_buffer[ADC_NBR_OF_CHANNEL-1] < Channel_Min_Max_Voltage[0])
+                if(CAN_BMS_InfomationStructure->battery_voltage < CAN_BMS_InfomationStructure->Min_Max_Voltage[0])
                 {
                     BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, LowVoltageOFF);
                 }
@@ -86,19 +86,19 @@ void BPS_Protection_Policy_Check(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation
         switch (high_voltage_flag)
         {
             case None_Policy:
-                if(CAN_BMS_InfomationStructure->current_voltage_buffer[ADC_NBR_OF_CHANNEL-1] > Channel_Min_Max_Voltage[1])
+                if(CAN_BMS_InfomationStructure->battery_voltage > CAN_BMS_InfomationStructure->Min_Max_Voltage[1])
                 {
                     BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, ON);
                 }
                 break;
             case Trip_Policy:
-                if(CAN_BMS_InfomationStructure->current_voltage_buffer[ADC_NBR_OF_CHANNEL-1] > Channel_Min_Max_Voltage[1])
+                if(CAN_BMS_InfomationStructure->battery_voltage > CAN_BMS_InfomationStructure->Min_Max_Voltage[1])
                 {
                     BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, HighVoltageOFF);
                 }
                 break;
             case Trip_Recover_Policy:
-                if(CAN_BMS_InfomationStructure->current_voltage_buffer[ADC_NBR_OF_CHANNEL-1] > Channel_Min_Max_Voltage[1])
+                if(CAN_BMS_InfomationStructure->battery_voltage> CAN_BMS_InfomationStructure->Min_Max_Voltage[1])
                 {
                     BPS_Set_Contorl_IO_Status(CAN_BMS_InfomationStructure, i, HighVoltageOFF);
                 }
@@ -133,7 +133,7 @@ void BPS_CAN_BMS_Info_Update(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation)
         temp_total_instantaneous_power += CAN_BMS_Infomation->CH[i].read_time_power;
         temp_total_cumulative_power += CAN_BMS_Infomation->CH[i].cumulative_power;
     }
-    CAN_BMS_Infomation->total_instantaneous_power = temp_total_instantaneous_power;
+    CAN_BMS_Infomation->total_read_time_power = temp_total_instantaneous_power;
     CAN_BMS_Infomation->total_cumulative_power = temp_total_cumulative_power;
 }
 
@@ -152,20 +152,20 @@ void TIM2_IRQHandler(void) // OLED 显示
         switch (OLED_page)
         {
         case 0:
-            sprintf((char *)OLED_Show_Buffer_Line1, "CH1:%4d f_CH1:%.2f  ", ADC_Buffer[0], CAN_BMS_Info.current_voltage_buffer[0]);
-            sprintf((char *)OLED_Show_Buffer_Line2, "CH2:%4d f_CH2:%.2f  ", ADC_Buffer[1], CAN_BMS_Info.current_voltage_buffer[1]);
+            sprintf((char *)OLED_Show_Buffer_Line1, "CH1:%4d f_CH1:%.2f  ", ADC_Buffer[0], CAN_BMS_Info.CH[0].real_time_current);
+            sprintf((char *)OLED_Show_Buffer_Line2, "CH2:%4d f_CH2:%.2f  ", ADC_Buffer[1], CAN_BMS_Info.CH[1].real_time_current);
             break;
         case 1:
-            sprintf((char *)OLED_Show_Buffer_Line1, "CH3:%4d f_CH3:%.2f  ", ADC_Buffer[2], CAN_BMS_Info.current_voltage_buffer[2]);
-            sprintf((char *)OLED_Show_Buffer_Line2, "CH4:%4d f_CH4:%.2f  ", ADC_Buffer[3], CAN_BMS_Info.current_voltage_buffer[3]);
+            sprintf((char *)OLED_Show_Buffer_Line1, "CH3:%4d f_CH3:%.2f  ", ADC_Buffer[2], CAN_BMS_Info.CH[2].real_time_current);
+            sprintf((char *)OLED_Show_Buffer_Line2, "CH4:%4d f_CH4:%.2f  ", ADC_Buffer[3], CAN_BMS_Info.CH[3].real_time_current);
             break;
         case 2:
-            sprintf((char *)OLED_Show_Buffer_Line1, "CH5:%4d f_CH5:%.2f  ", ADC_Buffer[4], CAN_BMS_Info.current_voltage_buffer[4]);
-            sprintf((char *)OLED_Show_Buffer_Line2, "CH6:%4d f_CH6:%.2f  ", ADC_Buffer[5], CAN_BMS_Info.current_voltage_buffer[5]);
+            sprintf((char *)OLED_Show_Buffer_Line1, "CH5:%4d f_CH5:%.2f  ", ADC_Buffer[4], CAN_BMS_Info.CH[4].real_time_current);
+            sprintf((char *)OLED_Show_Buffer_Line2, "CH6:%4d f_CH6:%.2f  ", ADC_Buffer[5], CAN_BMS_Info.CH[5].real_time_current);
             break;
         case 3:
-            sprintf((char *)OLED_Show_Buffer_Line1, "CH7:%4d f_CH7:%.2f  ", ADC_Buffer[6], CAN_BMS_Info.current_voltage_buffer[6]);
-            sprintf((char *)OLED_Show_Buffer_Line2, "CH8:%4d f_CH8:%.2f  ", ADC_Buffer[7], CAN_BMS_Info.current_voltage_buffer[7]);
+            sprintf((char *)OLED_Show_Buffer_Line1, "CH7:%4d f_CH7:%.2f  ", ADC_Buffer[6], CAN_BMS_Info.CH[6].real_time_current);
+            sprintf((char *)OLED_Show_Buffer_Line2, "CH8:%4d f_CH8:%.2f  ", ADC_Buffer[7], CAN_BMS_Info.CH[7].real_time_current);
             break;
         case 4:
             sprintf((char *)OLED_Show_Buffer_Line1, "O1:%4d O2:%4d       ", ADC_Offset_Buffer[0], ADC_Offset_Buffer[1]);
@@ -178,7 +178,7 @@ void TIM2_IRQHandler(void) // OLED 显示
         default:
             break;
         }
-        sprintf((char *)OLED_Show_Buffer_Line3, "Vol:%4d %2d  %2.2f", ADC_Buffer[8], ADC_Offset_Buffer[8],CAN_BMS_Info.current_voltage_buffer[8]);
+        sprintf((char *)OLED_Show_Buffer_Line3, "Vol:%4d %2d  %2.2f", ADC_Buffer[8], ADC_Offset_Buffer[8],CAN_BMS_Info.battery_voltage);
         cnt++;
         if(cnt % 20 == 0) // 2s换页
         {
@@ -206,9 +206,9 @@ void TIM3_IRQHandler(void) // 定时中断检测ADC
     if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
     {
         TIM_ClearITPendingBit(TIM3, TIM_IT_Update);     // 清TIM3溢出中断标志位
-        BPS_Get_Float_ADC(ADC_Buffer, CAN_BMS_Info.current_voltage_buffer); // 计算电压电流数据
-        BPS_CAN_BMS_Info_Update(&CAN_BMS_Info);                             // 更新信息
-        BPS_Protection_Policy_Check(&CAN_BMS_Info);                         // 电压电流功率报警检测
+        BPS_Get_Float_ADC(&CAN_BMS_Info);               // 计算电压电流数据
+        BPS_CAN_BMS_Info_Update(&CAN_BMS_Info);         // 更新信息
+        BPS_Protection_Policy_Check(&CAN_BMS_Info);     // 电压电流功率报警检测
         // // BPS_Current_Voltage_Protection_Check(adc_res);          // 电流报警检测
         // // BPS_Voltage_Protection_Check(adc_res);          // 电压报警检测
         // // BPS_Count_Power(adc_res, power_res);            // 
@@ -263,7 +263,7 @@ void USB_LP_CAN1_RX0_IRQHandler(void) // CAN 通信中断处理
             BPS_CAN_Send_Msg(CAN_ID, cmd, (uint8_t*)&CAN_BMS_Info.battery_voltage, 4);
             break;
         case 0x07:
-            BPS_CAN_Send_Msg(CAN_ID, cmd, (uint8_t*)&CAN_BMS_Info.total_instantaneous_power, 4);
+            BPS_CAN_Send_Msg(CAN_ID, cmd, (uint8_t*)&CAN_BMS_Info.total_read_time_power, 4);
             break;
         case 0x08:
             BPS_CAN_Send_Msg(CAN_ID, cmd, (uint8_t*)&CAN_BMS_Info.total_cumulative_power, 8); // double

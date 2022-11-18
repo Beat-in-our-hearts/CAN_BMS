@@ -91,25 +91,16 @@ typedef struct
     // real-time data
     Singer_Channel_TypeDef CH[OUTPUT_CHANNEL];
     float battery_voltage;
-    
-    float current_voltage_buffer[ADC_NBR_OF_CHANNEL];       // 暂存ADC转化后的实际电压电流数据
-    float instantaneous_power[OUTPUT_CHANNEL];      // 瞬时功率
-    float history_max_power[OUTPUT_CHANNEL];        // 峰值功率：历史最高功率
-    uint32_t work_time[OUTPUT_CHANNEL];             // 工作时间：单位ms
-    double cumulative_power[OUTPUT_CHANNEL];        // 累计功耗 
-    float on_average_power_buffer[OUTPUT_CHANNEL];  // 平均功率
-    float total_instantaneous_power;                        // 总瞬时功率
-    double total_cumulative_power;                          // 总累计功耗 
-    uint8_t Channel_State[OUTPUT_CHANNEL];                               // 通道状态
-    
-    // board setting
-    uint8_t Module_Type[8];                                 // 模块类型         【8/16】 buf0 buf1
-    uint8_t Firmware_Version[2];                            // 固件版本         【2/16】 buf4
-    uint8_t Protection_Policy[OUTPUT_CHANNEL];      // 保护策略         【8/16】 buf8 buf9
-    float Channel_Max_Current[OUTPUT_CHANNEL];      // 最大电流         【32/32】buf12 - 19
-    float Channel_Max_Power[OUTPUT_CHANNEL];        // 最大功率         【32/32】buf20 - 27
-    float Min_Max_Voltage[2];                               // 电压阈值 min-max 【8/8】  buf28 buf29
-    float Total_Max_Power;                                  // 最大总功耗       【4/8】  buf30
+    float total_read_time_power;
+    double total_cumulative_power;
+    // board setting 占用Flash 128个字节空间
+    uint8_t Module_Type[8];                     // 模块类型         【8/16】 buf0 buf1
+    uint8_t Firmware_Version[2];                // 固件版本         【2/16】 buf4
+    uint8_t Protection_Policy[OUTPUT_CHANNEL];  // 保护策略         【8/16】 buf8 buf9
+    float Channel_Max_Current[OUTPUT_CHANNEL];  // 最大电流         【32/32】buf12 - 19
+    float Channel_Max_Power[OUTPUT_CHANNEL];    // 最大功率         【32/32】buf20 - 27
+    float Min_Max_Voltage[2];                   // 电压阈值 min-max 【8/8】  buf28 buf29
+    float Total_Max_Power;                      // 最大总功耗       【4/8】  buf30
 
 
 }CAN_BMS_Infomation_TypeDef;

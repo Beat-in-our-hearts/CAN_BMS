@@ -1,6 +1,6 @@
 #include "BPS_can.h"
 
-uint16_t CAN_ID = 0;
+uint8_t CAN_ID = 0;
 
 void BPS_CAN_Base_Init(void)
 {
@@ -72,31 +72,7 @@ void BPS_CAN_Base_Init(void)
     CAN_FilterInit( &CAN_FilterInitSturcture ); 
 }
 
-
-// uint8_t BPS_CAN_Send_Msg(uint8_t* msg, uint8_t len)
-// {
-//     uint8_t mbox;
-//     uint16_t i = 0;
-
-//     CanTxMsg CanTxStructure = {0};
-
-//     CanTxStructure.StdId = (uint32_t)CAN_ID;
-//     CanTxStructure.ExtId = 0x00;
-//     CanTxStructure.IDE = CAN_Id_Standard;   // 标准帧
-//     CanTxStructure.RTR = CAN_RTR_Data;      // 数据帧
-//     CanTxStructure.DLC = len;               // 数据长度
-//     for( i = 0; i < len; i++ ){CanTxStructure.Data[i] = msg[i];} // 写数据
-
-//     mbox = CAN_Transmit( CAN1, &CanTxStructure );
-
-//     i = 0;
-//     while( ( CAN_TransmitStatus( CAN1, mbox ) != CAN_TxStatus_Ok ) && ( i < 0xFFF ) ){i++;}
-//     if( i == 0xFFF )
-//         return 1;
-//     return 0;
-// }
-
-uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t msg, uint8_t len)
+uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t* msg, uint8_t len)
 {
     uint8_t mbox;
     uint16_t i = 0;
@@ -108,7 +84,10 @@ uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t msg, uint8_t len)
     CanTxStructure.IDE = CAN_Id_Standard;   // 标准帧
     CanTxStructure.RTR = CAN_RTR_Data;      // 数据帧
     CanTxStructure.DLC = len;               // 数据长度
-    for( i = 0; i < len; i++ ){CanTxStructure.Data[i] = msg[i];} // 写数据
+    for( i = 0; i < len; i++ )
+		{
+			CanTxStructure.Data[i] = msg[i];
+		} // 写数据
 
     mbox = CAN_Transmit( CAN1, &CanTxStructure );
 
@@ -175,14 +154,16 @@ void BPS_CAN_Read_ID(void)
     CAN_ID = i;
 }
 
-void BPS_CAN_Test_Tx(void)
-{
-    static uint8_t can_test_buffer[8] = {0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02};
-    uint8_t i = 0;
-    BPS_CAN_Send_Msg(can_test_buffer,8);
-    for(i=0;i<8;++i)
-        can_test_buffer[i]++;
-}
+/*
+//void BPS_CAN_Test_Tx(void)
+//{
+//    static uint8_t can_test_buffer[8] = {0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02};
+//    uint8_t i = 0;
+//    BPS_CAN_Send_Msg(can_test_buffer,8);
+//    for(i=0;i<8;++i)
+//        can_test_buffer[i]++;
+//}
+*/
 
 // Can 滤波器示例
 
