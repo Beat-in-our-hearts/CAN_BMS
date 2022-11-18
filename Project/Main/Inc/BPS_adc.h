@@ -2,9 +2,9 @@
 #define __BPS_ADC_H
 
 #include "debug.h"
+
 #include "BPS_global_define.h"
 #include "BPS_gpio.h"
-
 
 
 #define CURRENT_GAIN        100
@@ -35,6 +35,7 @@ extern uint16_t ADC_Buffer[ADC_NBR_OF_CHANNEL];         // 存储ADC数据 DMA�
 extern uint16_t ADC_Offset_Buffer[ADC_NBR_OF_CHANNEL];  // 读取零偏误差 上电即测
 extern uint8_t ADC_Offset_Check_Flag;                   // 成功读取偏差值为1 否则为0
  
+
 void BPS_ADC_Base_Init(void);       // 设置ADC 基本功能
 void BPS_DMA_ADC_Tx_Init(void);     // 设置DMA对应的内存地址和长度
 //// void BPS_Set_ADC_Freq(void);     // 设置定时器TIM3 TRGO 触发ADC采集的频率

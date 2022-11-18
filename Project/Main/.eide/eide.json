@@ -1,0 +1,294 @@
+{
+  "name": "CH32F10x",
+  "type": "ARM",
+  "dependenceList": [],
+  "srcDirs": [],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": [
+      {
+        "name": "user",
+        "files": [
+          {
+            "path": "ch32f10x_it.c"
+          },
+          {
+            "path": "Main.c"
+          },
+          {
+            "path": "system_ch32f10x.c"
+          },
+          {
+            "path": "OLED/oled.c"
+          },
+          {
+            "path": "Src/BPS_adc.c"
+          },
+          {
+            "path": "Src/BPS_gpio.c"
+          },
+          {
+            "path": "Src/BPS_can.c"
+          },
+          {
+            "path": "Src/BPS_control.c"
+          },
+          {
+            "path": "Src/BPS_timer.c"
+          },
+          {
+            "path": "Src/BPS_global_define.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "startup",
+        "files": [
+          {
+            "path": "../../SRC/Startup/startup_ch32f10x.s"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "core",
+        "files": [
+          {
+            "path": "../../SRC/CMSIS/core_cm3.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "debug",
+        "files": [
+          {
+            "path": "../../SRC/Debug/debug.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "peripheral",
+        "files": [
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_adc.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_bkp.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_can.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_crc.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_dac.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_dbgmcu.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_dma.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_exti.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_flash.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_gpio.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_i2c.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_iwdg.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_misc.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_pwr.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_rcc.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_rtc.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_spi.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_tim.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_usart.c"
+          },
+          {
+            "path": "../../SRC/StdPeriphDriver/src/ch32f10x_wwdg.c"
+          }
+        ],
+        "folders": []
+      }
+    ]
+  },
+  "outDir": "build",
+  "deviceName": null,
+  "packDir": null,
+  "miscInfo": {},
+  "targets": {
+    "CH32F10x": {
+      "excludeList": [],
+      "toolchain": "AC5",
+      "compileConfig": {
+        "cpuType": "Cortex-M3",
+        "floatingPointHardware": "none",
+        "scatterFilePath": "<YOUR_LINKER_SCRIPT>.lds",
+        "useCustomScatterFile": false,
+        "storageLayout": {
+          "RAM": [
+            {
+              "tag": "RAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x20000000",
+                "size": "0x5000"
+              },
+              "isChecked": true,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            }
+          ],
+          "ROM": [
+            {
+              "tag": "ROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "IROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x8000000",
+                "size": "0x10000"
+              },
+              "isChecked": true,
+              "isStartup": true
+            },
+            {
+              "tag": "IROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            }
+          ]
+        },
+        "options": "null"
+      },
+      "uploader": "JLink",
+      "uploadConfig": {
+        "bin": "",
+        "baseAddr": "",
+        "cpuInfo": {
+          "vendor": "null",
+          "cpuName": "null"
+        },
+        "proType": 1,
+        "speed": 8000,
+        "otherCmds": ""
+      },
+      "uploadConfigMap": {},
+      "custom_dep": {
+        "name": "default",
+        "sourceDirList": [],
+        "libList": [],
+        "incList": [
+          "../../SRC/StdPeriphDriver/inc",
+          "../../SRC/CMSIS",
+          "../../SRC/Debug",
+          ".",
+          "OLED",
+          "Inc",
+          ".cmsis/include",
+          "RTE/_CH32F10x"
+        ],
+        "defineList": []
+      }
+    }
+  },
+  "version": "3.3"
+}
