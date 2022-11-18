@@ -47,43 +47,43 @@ void BPS_ID_IO_Init(void)
     GPIO_Init(ID3_GPIO_Port, &GPIO_InitStructure);
 }
 
-void BPS_Set_Contorl_IO_Status(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomation, uint8_t channel_num, FunctionalState NewState)
+void BPS_Set_Contorl_IO_Status(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomation, uint8_t channel_num, CH_State NewState)
 {
-    if( NewState != DISABLE )
+    if( NewState == ON || NewState == OverCurrentOn ||  NewState == OverPowerOn)
     {
         switch (channel_num)
         {
         case 1:
             GPIO_SetBits(Control_IO_CH1_4_GPIO_Port, Control_IO_CH1_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[0] = 1;
+            CAN_BMS_Infomation->CH[0].state = NewState;
             break;
         case 2:
             GPIO_SetBits(Control_IO_CH1_4_GPIO_Port, Control_IO_CH2_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[1] = 1;
+            CAN_BMS_Infomation->CH[1].state = NewState;
             break;
         case 3:
             GPIO_SetBits(Control_IO_CH1_4_GPIO_Port, Control_IO_CH3_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[2] = 1;
+            CAN_BMS_Infomation->CH[2].state = NewState;
             break;
         case 4:
             GPIO_SetBits(Control_IO_CH1_4_GPIO_Port, Control_IO_CH4_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[3] = 1;
+            CAN_BMS_Infomation->CH[3].state = NewState;
             break;
         case 5:
             GPIO_SetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH5_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[4] = 1;
+            CAN_BMS_Infomation->CH[4].state = NewState;
             break;
         case 6:
             GPIO_SetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH6_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[5] = 1;
+            CAN_BMS_Infomation->CH[5].state = NewState;
             break;
         case 7:
             GPIO_SetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH7_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[6] = 1;
+            CAN_BMS_Infomation->CH[6].state = NewState;
             break;
         case 8:
             GPIO_SetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH8_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[7] = 1;
+            CAN_BMS_Infomation->CH[7].state = NewState;
             break;
         default:
             break;
@@ -92,38 +92,38 @@ void BPS_Set_Contorl_IO_Status(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomation, u
     else
     {
         switch (channel_num)
-                {
+        {
         case 1:
             GPIO_ResetBits(Control_IO_CH1_4_GPIO_Port, Control_IO_CH1_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[0] = 0;
+            CAN_BMS_Infomation->CH[0].state = NewState;
             break;
         case 2:
             GPIO_ResetBits(Control_IO_CH1_4_GPIO_Port, Control_IO_CH2_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[1] = 0;
+            CAN_BMS_Infomation->CH[1].state = NewState;
             break;
         case 3:
             GPIO_ResetBits(Control_IO_CH1_4_GPIO_Port, Control_IO_CH3_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[2] = 0;
+            CAN_BMS_Infomation->CH[2].state = NewState;
             break;
         case 4:
             GPIO_ResetBits(Control_IO_CH1_4_GPIO_Port, Control_IO_CH4_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[3] = 0;
+            CAN_BMS_Infomation->CH[3].state = NewState;
             break;
         case 5:
             GPIO_ResetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH5_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[4] = 0;
+            CAN_BMS_Infomation->CH[4].state = NewState;
             break;
         case 6:
             GPIO_ResetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH6_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[5] = 0;
+            CAN_BMS_Infomation->CH[5].state = NewState;
             break;
         case 7:
             GPIO_ResetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH7_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[6] = 0;
+            CAN_BMS_Infomation->CH[6].state = NewState;
             break;
         case 8:
             GPIO_ResetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH8_Pin);
-            CAN_BMS_Infomation->contorl_GPIO_status[7] = 0;
+            CAN_BMS_Infomation->CH[7].state = NewState;
             break;
         default:
             break;
@@ -136,7 +136,7 @@ uint8_t BPS_Check_All_Channel_Reset(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomati
     uint8_t i = 0;
     for(i = 0; i < 8; ++i)
     {
-        if(CAN_BMS_Infomation->contorl_GPIO_status[i] == 1)
+        if(CAN_BMS_Infomation->Channel_State[i] == 1)
             return 0;
     }
     return 1;

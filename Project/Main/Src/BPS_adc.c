@@ -111,18 +111,32 @@ void BPS_ADC_Init(void)
     //// BPS_Set_ADC_Freq();
 }
 
+/*
+// void BPS_Get_Float_ADC(uint16_t *buf, float *res)
+// {
+//     res[0] = 3.3f * (buf[0] - ADC_Offset_Buffer[0])  / 4096.0f / CURRENT_GAIN / CURRENT_R1;
+//     res[1] = 3.3f * (buf[1] - ADC_Offset_Buffer[1])  / 4096.0f / CURRENT_GAIN / CURRENT_R2;
+//     res[2] = 3.3f * (buf[2] - ADC_Offset_Buffer[2])  / 4096.0f / CURRENT_GAIN / CURRENT_R3;
+//     res[3] = 3.3f * (buf[3] - ADC_Offset_Buffer[3])  / 4096.0f / CURRENT_GAIN / CURRENT_R4;
+//     res[4] = 3.3f * (buf[4] - ADC_Offset_Buffer[4])  / 4096.0f / CURRENT_GAIN / CURRENT_R5;
+//     res[5] = 3.3f * (buf[5] - ADC_Offset_Buffer[5])  / 4096.0f / CURRENT_GAIN / CURRENT_R6;
+//     res[6] = 3.3f * (buf[6] - ADC_Offset_Buffer[6])  / 4096.0f / CURRENT_GAIN / CURRENT_R7;
+//     res[7] = 3.3f * (buf[7] - ADC_Offset_Buffer[7])  / 4096.0f / CURRENT_GAIN / CURRENT_R8;
+//     res[8] = 3.3f * (buf[8] - ADC_Offset_Buffer[8])  / 4096.0f * VBUS_KP;
+// }
+*/
 
-void BPS_Get_Float_ADC(uint16_t *buf, float *res)
+void BPS_Get_Float_ADC(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure)
 {
-    res[0] = 3.3f * (buf[0] - ADC_Offset_Buffer[0])  / 4096.0f / CURRENT_GAIN / CURRENT_R1;
-    res[1] = 3.3f * (buf[1] - ADC_Offset_Buffer[1])  / 4096.0f / CURRENT_GAIN / CURRENT_R2;
-    res[2] = 3.3f * (buf[2] - ADC_Offset_Buffer[2])  / 4096.0f / CURRENT_GAIN / CURRENT_R3;
-    res[3] = 3.3f * (buf[3] - ADC_Offset_Buffer[3])  / 4096.0f / CURRENT_GAIN / CURRENT_R4;
-    res[4] = 3.3f * (buf[4] - ADC_Offset_Buffer[4])  / 4096.0f / CURRENT_GAIN / CURRENT_R5;
-    res[5] = 3.3f * (buf[5] - ADC_Offset_Buffer[5])  / 4096.0f / CURRENT_GAIN / CURRENT_R6;
-    res[6] = 3.3f * (buf[6] - ADC_Offset_Buffer[6])  / 4096.0f / CURRENT_GAIN / CURRENT_R7;
-    res[7] = 3.3f * (buf[7] - ADC_Offset_Buffer[7])  / 4096.0f / CURRENT_GAIN / CURRENT_R8;
-    res[8] = 3.3f * (buf[8] - ADC_Offset_Buffer[8])  / 4096.0f * VBUS_KP;
+    CAN_BMS_InfomationStructure->CH[0].real_time_current = 3.3f * (ADC_Buffer[0] - ADC_Offset_Buffer[0])  / 4096.0f / CURRENT_GAIN / CURRENT_R1;
+    CAN_BMS_InfomationStructure->CH[1].real_time_current = 3.3f * (ADC_Buffer[1] - ADC_Offset_Buffer[1])  / 4096.0f / CURRENT_GAIN / CURRENT_R2;
+    CAN_BMS_InfomationStructure->CH[2].real_time_current = 3.3f * (ADC_Buffer[2] - ADC_Offset_Buffer[2])  / 4096.0f / CURRENT_GAIN / CURRENT_R3;
+    CAN_BMS_InfomationStructure->CH[3].real_time_current = 3.3f * (ADC_Buffer[3] - ADC_Offset_Buffer[3])  / 4096.0f / CURRENT_GAIN / CURRENT_R4;
+    CAN_BMS_InfomationStructure->CH[4].real_time_current = 3.3f * (ADC_Buffer[4] - ADC_Offset_Buffer[4])  / 4096.0f / CURRENT_GAIN / CURRENT_R5;
+    CAN_BMS_InfomationStructure->CH[5].real_time_current = 3.3f * (ADC_Buffer[5] - ADC_Offset_Buffer[5])  / 4096.0f / CURRENT_GAIN / CURRENT_R6;
+    CAN_BMS_InfomationStructure->CH[6].real_time_current = 3.3f * (ADC_Buffer[6] - ADC_Offset_Buffer[6])  / 4096.0f / CURRENT_GAIN / CURRENT_R7;
+    CAN_BMS_InfomationStructure->CH[7].real_time_current = 3.3f * (ADC_Buffer[7] - ADC_Offset_Buffer[7])  / 4096.0f / CURRENT_GAIN / CURRENT_R8;
+    CAN_BMS_InfomationStructure->battery_voltage = 3.3f * (ADC_Buffer[8] - ADC_Offset_Buffer[8])  / 4096.0f * VBUS_KP;
 }
 
 

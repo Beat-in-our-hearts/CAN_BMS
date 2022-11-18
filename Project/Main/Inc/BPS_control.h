@@ -15,10 +15,7 @@
 #define MIN_VOLTAGE 21.0f
 
 
-
-
-
-void BPS_Current_Voltage_Protection_Check(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation);
+void BPS_Protection_Policy_Check(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation);
 
 // TODO: 瞬时功率 or 全部功率计算
 void BPS_CAN_BMS_Info_Update(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation); // 计算功率

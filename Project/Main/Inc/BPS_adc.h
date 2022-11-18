@@ -42,7 +42,9 @@ void BPS_ADC_NVIC_Config(void);     // 设置所需的中断函数优先级
 void BPS_ADC_Init(void);            // 设置ADC功能：端口初始化、ADC初始化、DMA初始化////定时器初始化
 
 // 数组结构 前n-1为电流 最后1位电压
-void BPS_Get_Float_ADC(uint16_t *buf, float *res);  // ADC转实际电压
+////void BPS_Get_Float_ADC(uint16_t *buf, float *res);  // ADC转实际电压
+void BPS_Get_Float_ADC(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure);
+
 
 
 // TODO : 注入组 或者 默认查询前100次转换
