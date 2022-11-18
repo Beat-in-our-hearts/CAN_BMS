@@ -26,7 +26,7 @@ void BPS_CAN_Init(void);                            // 设置CAN总线功能
 
 void BPS_CAN_Read_ID(void);
 
-void BPS_CAN_Test_Tx(void);
+// void BPS_CAN_Test_Tx(void);
 
 #endif
 
