@@ -2,56 +2,13 @@
   "name": "CH32F10x",
   "type": "ARM",
   "dependenceList": [],
-  "srcDirs": [],
+  "srcDirs": [
+    ".eide/deps"
+  ],
   "virtualFolder": {
     "name": "<virtual_root>",
     "files": [],
     "folders": [
-      {
-        "name": "user",
-        "files": [
-          {
-            "path": "ch32f10x_it.c"
-          },
-          {
-            "path": "Main.c"
-          },
-          {
-            "path": "system_ch32f10x.c"
-          },
-          {
-            "path": "OLED/oled.c"
-          },
-          {
-            "path": "Src/BPS_adc.c"
-          },
-          {
-            "path": "Src/BPS_gpio.c"
-          },
-          {
-            "path": "Src/BPS_can.c"
-          },
-          {
-            "path": "Src/BPS_control.c"
-          },
-          {
-            "path": "Src/BPS_timer.c"
-          },
-          {
-            "path": "Src/BPS_global_define.c"
-          }
-        ],
-        "folders": []
-      },
-      {
-        "name": "startup",
-        "files": [
-          {
-            "path": "../../SRC/Startup/startup_ch32f10x.s"
-          }
-        ],
-        "folders": []
-      },
       {
         "name": "core",
         "files": [
@@ -135,13 +92,60 @@
           }
         ],
         "folders": []
+      },
+      {
+        "name": "startup",
+        "files": [
+          {
+            "path": "../../SRC/Startup/startup_ch32f10x.s"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "user",
+        "files": [
+          {
+            "path": "ch32f10x_it.c"
+          },
+          {
+            "path": "Main.c"
+          },
+          {
+            "path": "OLED/oled.c"
+          },
+          {
+            "path": "Src/BPS_adc.c"
+          },
+          {
+            "path": "Src/BPS_can.c"
+          },
+          {
+            "path": "Src/BPS_control.c"
+          },
+          {
+            "path": "Src/BPS_global_define.c"
+          },
+          {
+            "path": "Src/BPS_gpio.c"
+          },
+          {
+            "path": "Src/BPS_timer.c"
+          },
+          {
+            "path": "system_ch32f10x.c"
+          }
+        ],
+        "folders": []
       }
     ]
   },
   "outDir": "build",
-  "deviceName": null,
-  "packDir": null,
-  "miscInfo": {},
+  "deviceName": "CH32F103C8",
+  "packDir": ".pack/Keil/WCH32F1xx_DFP.1.0.1",
+  "miscInfo": {
+    "uid": "a1d23ff119a18db806684504c7479624"
+  },
   "targets": {
     "CH32F10x": {
       "excludeList": [],
@@ -259,23 +263,33 @@
         },
         "options": "null"
       },
-      "uploader": "JLink",
+      "uploader": "STLink",
       "uploadConfig": {
         "bin": "",
-        "baseAddr": "",
-        "cpuInfo": {
-          "vendor": "null",
-          "cpuName": "null"
-        },
-        "proType": 1,
-        "speed": 8000,
+        "proType": "SWD",
+        "resetMode": "default",
+        "runAfterProgram": true,
+        "speed": 4000,
+        "address": "0x8000000",
+        "elFile": "None",
+        "optionBytes": ".eide/ch32f10x.st.option.bytes.ini",
         "otherCmds": ""
       },
-      "uploadConfigMap": {},
+      "uploadConfigMap": {
+        "JLink": {
+          "bin": "",
+          "baseAddr": "",
+          "cpuInfo": {
+            "vendor": "null",
+            "cpuName": "null"
+          },
+          "proType": 1,
+          "speed": 8000,
+          "otherCmds": ""
+        }
+      },
       "custom_dep": {
         "name": "default",
-        "sourceDirList": [],
-        "libList": [],
         "incList": [
           "../../SRC/StdPeriphDriver/inc",
           "../../SRC/CMSIS",
@@ -284,8 +298,11 @@
           "OLED",
           "Inc",
           ".cmsis/include",
-          "RTE/_CH32F10x"
+          "RTE/_CH32F10x",
+          ".eide/deps"
         ],
+        "libList": [],
+        "sourceDirList": [],
         "defineList": []
       }
     }
