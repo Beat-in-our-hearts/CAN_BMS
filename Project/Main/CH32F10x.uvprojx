@@ -432,6 +432,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\BPS_global_define.c</FilePath>
             </File>
+            <File>
+              <FileName>BPS_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\BPS_flash.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

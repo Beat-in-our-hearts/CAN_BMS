@@ -34,4 +34,5 @@
 .\obj\main.o: .\Inc\BPS_gpio.h
 .\obj\main.o: .\Inc\BPS_can.h
 .\obj\main.o: .\Inc\BPS_timer.h
+.\obj\main.o: .\Inc\BPS_flash.h
 .\obj\main.o: .\Inc\BPS_control.h

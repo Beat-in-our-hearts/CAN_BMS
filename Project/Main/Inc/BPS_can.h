@@ -1,3 +1,17 @@
+/***************************************************************** (C) COPYRIGHT  *****************************************************************
+ * File Name          : BPS_can.h
+ * Author             : lzx
+ * Version            : V1.0.0
+ * Date               : 2021/11/25
+ * Description        : 【宏定义】 Can总线采用的波特率 Can工作模式（默认正常模式）
+ *                      【全局变量】 CAN_ID 为当前设备号 默认上电读取一次后不再读取
+ *                      【函数说明】 BPS_CAN_Base_Init       开启时钟；初始IO；CAN初始化结构体
+ *                                  BPS_CAN_Read_ID         读取设备ID（上电执行一次）
+ *                                  BPS_CAN_NVIC_Config     设置中断优先级
+ *                                  BPS_CAN_Init            主函数中依次调用上述函数
+ *                                  BPS_CAN_Send_Msg        阻塞发送  
+ *                                  BPS_CAN_Receive_Msg     读取FIFO缓存信息
+ ************************************************************************************************************************************************/ 
 #ifndef __BPS_CAN_H
 #define __BPS_CAN_H
 
@@ -18,12 +32,12 @@
 
 extern uint8_t CAN_ID;
 
-uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t* msg, uint8_t len);  // 发送消息
-uint8_t BPS_CAN_Receive_Msg(uint8_t* buf);          // 检查是否存在消息并接受，非阻塞
 void BPS_CAN_Base_Init(void);                       // CAN GPIO 重映射 模式选择 滤波器设置
 void BPS_CAN_NVIC_Config(void);                     // 中断服务
 void BPS_CAN_Init(void);                            // 设置CAN总线功能
 
+uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t* msg, uint8_t len);  // 发送消息
+uint8_t BPS_CAN_Receive_Msg(uint8_t* buf);          // 检查是否存在消息并接受
 void BPS_CAN_Read_ID(void);
 
 // void BPS_CAN_Test_Tx(void);

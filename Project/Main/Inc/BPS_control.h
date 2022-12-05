@@ -1,3 +1,17 @@
+/***************************************************************** (C) COPYRIGHT  *****************************************************************
+ * File Name          : BPS_contorl.h
+ * Author             : lzx
+ * Version            : V1.2.0
+ * Date               : 2021/12/5
+ * Description        : 
+ *                      
+ *                      【函数说明】 BPS_CAN_BMS_Info_Update        计算所有状态信息
+ *                                  BPS_Protection_Policy_Check    根据保护策略，控制通道通断管理
+ *                                  dma_adc 中断管理函数
+ *                                  can 中断管理函数
+ *                                  tim2 刷屏函数
+ *                                  tim3 定时中断函数【主循环】
+ ************************************************************************************************************************************************/ 
 #ifndef __BPS_CONTROL_H
 #define __BPS_CONTROL_H
 
@@ -7,12 +21,8 @@
 #include "BPS_can.h"
 #include "BPS_gpio.h"
 #include "BPS_timer.h"
+#include "BPS_flash.h"
 #include "oled.h"
-
-#define DELTA_T    0.001
-#define MAX_CURRENT 5.0f
-#define MAX_VOLTAGE 25.2f 
-#define MIN_VOLTAGE 21.0f
 
 
 void BPS_Protection_Policy_Check(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation);

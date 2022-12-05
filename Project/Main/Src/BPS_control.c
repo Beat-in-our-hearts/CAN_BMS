@@ -126,7 +126,7 @@ void BPS_CAN_BMS_Info_Update(CAN_BMS_Infomation_TypeDef * CAN_BMS_Infomation)
         temp_state = CAN_BMS_Infomation->CH[i].state;
         if(temp_state == ON || temp_state == OverCurrentOn ||  temp_state == OverPowerOn)
         {
-            CAN_BMS_Infomation->CH[i].work_time ++;
+            CAN_BMS_Infomation->CH[i].work_time += DELTA_T_ns;
             CAN_BMS_Infomation->CH[i].cumulative_power += CAN_BMS_Infomation->CH[i].read_time_power * DELTA_T;
             // TODO:on_average_power_buffer
         }
@@ -223,9 +223,10 @@ void USB_LP_CAN1_RX0_IRQHandler(void) // CAN 通信中断处理
     uint8_t i = 0;
     uint8_t cmd = 0;
     static uint8_t can_buffer[8] ={0};
+    CH_State temp_state = OFF;
     CanRxMsg CanRxStructure = {0};
     CAN_Receive(CAN1, CAN_FIFO0, &CanRxStructure); // 读取FIFO0中缓存的can数据
-    // TODO: 接受到对应命令后传输对应CAN帧数据
+    // 接受到对应命令后传输对应CAN帧数据
     if(CanRxStructure.IDE == CAN_Id_Standard && CanRxStructure.RTR == CAN_RTR_Data)
     {
         cmd = CanRxStructure.StdId & 0x01F; // 后5位为指令位
@@ -238,10 +239,39 @@ void USB_LP_CAN1_RX0_IRQHandler(void) // CAN 通信中断处理
             }
             break;
         case 0x01:
-            // for(i = 0; i < 8; ++i)
-            // {
-            //     CAN_BMS_Info.Protection_Policy[i] = 
-            // }
+            for(i = 0; i < 8; ++i)
+            {
+                switch (CanRxStructure.Data[i])
+                {
+                case 0:
+                    temp_state = OFF;
+                    break;
+                case 1:
+                    temp_state = ON;
+                    break;
+                case 2:
+                    temp_state = OverCurrentOn;
+                    break;
+                case 3:
+                    temp_state = OverPowerOn;
+                    break;
+                case 4:
+                    temp_state = OverCurrentOFF;
+                    break;
+                case 5:
+                    temp_state = OverPowerOFF;
+                    break;
+                case 6:
+                    temp_state = LowVoltageOFF;
+                    break;
+                case 7:
+                    temp_state = HighVoltageOFF;
+                    break;
+                default:
+                    break;
+                }
+                BPS_Set_Contorl_IO_Status(&CAN_BMS_Info, i, temp_state); 
+            }
             break;
         case 0x02:
             BPS_CAN_Send_Msg(CAN_ID, cmd, CAN_BMS_Info.Module_Type, 8);
@@ -312,21 +342,39 @@ void USB_LP_CAN1_RX0_IRQHandler(void) // CAN 通信中断处理
         default:
             break;
         }
+        if(cmd == 0x10 || cmd == 0x11 || cmd == 0x12 || cmd == 0x13 || cmd == 0x14 ) // 写flash指令
+        {
+            BPS_Flash_Write_Setting(&CAN_BMS_Info);
+        }
+
     }
-    /*
-    // cmd = CanRxStructure.IDE 
-    // switch (CanRxStructure.IDE & )
-    // {
-    // case 
-    */
-    //     /* code */
-    //     break;
-    
-    // default:
-    //     break;
-    // }
-	// 	BPS_CAN_Send_Msg(can_test_buffer,8); 
-    //// CanRxStructure.Data[i] 8 字节消息
 }
 
 
+
+void DMA1_Channel1_IRQHandler(void)
+{
+    static uint32_t cnt = 0;
+    static uint32_t sum_offset[ADC_NBR_OF_CHANNEL] = {0};
+    static uint8_t i = 0;
+    if (DMA_GetITStatus(DMA1_IT_TC1)) // 传输完成中断
+    {
+        DMA_ClearITPendingBit(DMA1_IT_GL1); //清除全部中断标志
+        // 可以进行数字滤波
+        if(cnt < 100 && ADC_Offset_Check_Flag)
+        {   
+            for(i = 0; i < ADC_NBR_OF_CHANNEL; ++i)
+            {
+                sum_offset[i] += ADC_Buffer[i];
+            }
+            cnt ++;
+        }
+        else if(cnt == 100)
+        {
+            for(i = 0; i < ADC_NBR_OF_CHANNEL; ++i)
+            {
+                ADC_Offset_Buffer[i] = sum_offset[i] / 100;
+            }
+        }
+    }
+}

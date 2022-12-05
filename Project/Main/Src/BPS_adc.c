@@ -141,34 +141,4 @@ void BPS_Get_Float_ADC(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure)
 
 
 
-void DMA1_Channel1_IRQHandler(void)
-{
-    static uint32_t cnt = 0;
-    static uint32_t sum_offset[ADC_NBR_OF_CHANNEL] = {0};
-    static uint8_t i = 0;
-    if (DMA_GetITStatus(DMA1_IT_TC1)) // 传输完成中断
-    {
-        DMA_ClearITPendingBit(DMA1_IT_GL1); //清除全部中断标志
-        // 可以进行数字滤波
-        if(cnt < 100 && ADC_Offset_Check_Flag)
-        {   
-            for(i = 0; i < ADC_NBR_OF_CHANNEL; ++i)
-            {
-                sum_offset[i] += ADC_Buffer[i];
-            }
-            cnt ++;
-        }
-        else if(cnt == 100)
-        {
-            for(i = 0; i < ADC_NBR_OF_CHANNEL; ++i)
-            {
-                ADC_Offset_Buffer[i] = sum_offset[i] / 100;
-            }
-        }
-
-        // cnt++;
-        // if(cnt == 10000)
-        // //     GPIO_SetBits(Control_IO_CH5_8_GPIO_Port, Control_IO_CH6_Pin);
-    }
-}
 

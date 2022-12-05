@@ -1,12 +1,14 @@
-
-/********************************** (C) COPYRIGHT  *******************************
- * File Name          : 
+/***************************************************************** (C) COPYRIGHT  *****************************************************************
+ * File Name          : BPS_global_define.h
  * Author             : lzx
  * Version            : V1.0.0
- * Date               : 2022/11/16
- * Description        : 本文件保留适用全部工程的定义以及最重要的信息结构体, 外部文件需要引用本文件
- * 此外 其他头文件只保存校准的一些宏和特定功能的全局变量
- *******************************************************************************/
+ * Date               : 2021/11/25
+ * Description        : 【枚举类】 保护测量和通道状态
+ *                      【结构体】 单通道实时数据    多通道实时数据以及管理策略信息
+ *                      【宏定义】 通道数量 以及IO端口
+ *                      【全局变量】 CAN_BMS_Info 当前设备实时数据和管理信息
+ *                                  Type_Name Version设备类型和固件版本号 每次修改程序以写入到flash中
+ ************************************************************************************************************************************************/ 
 #ifndef __BPS_GLOBAL_DEFINE_H
 #define __BPS_GLOBAL_DEFINE_H
 
@@ -18,7 +20,7 @@ typedef enum
     Trip_Policy = 0x01,
     Trip_Recover_Policy = 0x10,
     Other_Policy = 0x11
-}Policy;
+}Policy; // 保护策略
 
 typedef enum 
 {
@@ -30,11 +32,12 @@ typedef enum
     OverPowerOFF = 5,
     LowVoltageOFF = 6,
     HighVoltageOFF  = 7
-}CH_State;
+}CH_State; // 通道状态
 
 
-#define ADC_NBR_OF_CHANNEL 9
+
 #define OUTPUT_CHANNEL 8
+#define ADC_NBR_OF_CHANNEL (OUTPUT_CHANNEL + 1)
 /* Control CH1-8 PIN */
 #define Control_IO_CH1_4_GPIO_Port GPIOA
 #define Control_IO_CH1_Pin GPIO_Pin_11
@@ -59,7 +62,7 @@ typedef enum
 #define ADC_CH7_Pin GPIO_Pin_1
 #define ADC_CH8_Pin GPIO_Pin_0
 
-/* ADC VOl CH PIN */
+/* ADC VOL CH PIN */
 #define V_CH_Pin GPIO_Pin_0
 #define V_CH_GPIO_Port GPIOB
 
@@ -79,10 +82,10 @@ typedef struct
     float real_time_current;    // 实时电流
     float read_time_power;      // 实时功率
     float history_max_power;    // 峰值功率
-    uint32_t work_time;         // 工作时间ms
+    uint32_t work_time;         // 工作时间ns
     double cumulative_power;    // 累计功耗
     float on_average_power;     // 平均功耗
-    CH_State state;              // 通道状态
+    CH_State state;             // 通道状态
 }Singer_Channel_TypeDef;
 
 
@@ -105,7 +108,8 @@ typedef struct
 
 }CAN_BMS_Infomation_TypeDef;
 
-
+extern const char Type_Name[8];
+extern const uint8_t Version[2];
 
 extern CAN_BMS_Infomation_TypeDef CAN_BMS_Info;
 

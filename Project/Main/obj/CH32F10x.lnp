@@ -9,6 +9,7 @@
 ".\obj\bps_control.o"
 ".\obj\bps_timer.o"
 ".\obj\bps_global_define.o"
+".\obj\bps_flash.o"
 ".\obj\startup_ch32f10x.o"
 ".\obj\core_cm3.o"
 ".\obj\debug.o"

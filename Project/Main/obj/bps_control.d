@@ -33,5 +33,6 @@
 .\obj\bps_control.o: .\Inc\BPS_gpio.h
 .\obj\bps_control.o: .\Inc\BPS_can.h
 .\obj\bps_control.o: .\Inc\BPS_timer.h
+.\obj\bps_control.o: .\Inc\BPS_flash.h
 .\obj\bps_control.o: .\OLED\oled.h
 .\obj\bps_control.o: D:\Program Files (x86)\mdk5\ARM\ARMCC\Bin\..\include\stdlib.h

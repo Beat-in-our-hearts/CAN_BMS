@@ -124,6 +124,9 @@
             "path": "Src/BPS_control.c"
           },
           {
+            "path": "Src/BPS_flash.c"
+          },
+          {
             "path": "Src/BPS_global_define.c"
           },
           {
