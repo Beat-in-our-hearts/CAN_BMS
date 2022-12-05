@@ -11,15 +11,15 @@
 
 #include "debug.h"
 #include "oled.h"
-#include "BPS_global_define.h" // 定义绝大多数宏
+#include "BSP_global_define.h" // 定义绝大多数宏
 
-#include "BPS_adc.h"
-#include "BPS_gpio.h"
-#include "BPS_can.h"
-#include "BPS_timer.h"
-#include "BPS_flash.h"
+#include "BSP_adc.h"
+#include "BSP_gpio.h"
+#include "BSP_can.h"
+#include "BSP_timer.h"
+#include "BSP_flash.h"
 
-#include "BPS_control.h"
+#include "BSP_control.h"
 
 uint8_t can_test_buffer[8] = {0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02};
 
@@ -48,12 +48,12 @@ int main(void)
   OLED_ShowString(0, 0, "OLED Loading", 24, 1); // OLED TEST
   OLED_Refresh();
 
-  BPS_Flash_Init();       // 初始化Flash，读取设定参数
-  BPS_Contorl_IO_Init();  // IO
-  BPS_ID_IO_Init();
-  BPS_ADC_Init();         // adc功能
-  BPS_CAN_Init();         // can协议
-  BPS_TIM_Init();         // 定时器 【主循环】
+  BSP_Flash_Init();       // 初始化Flash，读取设定参数
+  BSP_Contorl_IO_Init();  // IO
+  BSP_ID_IO_Init();
+  BSP_ADC_Init();         // adc功能
+  BSP_CAN_Init();         // can协议
+  BSP_TIM_Init();         // 定时器 【主循环】
   OLED_Clear();
 
   Delay_Ms(1000);

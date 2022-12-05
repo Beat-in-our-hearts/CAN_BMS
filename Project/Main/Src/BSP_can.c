@@ -1,8 +1,8 @@
-#include "BPS_can.h"
+#include "BSP_can.h"
 
 uint8_t CAN_ID = 0;
 
-void BPS_CAN_Base_Init(void)
+void BSP_CAN_Base_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitSturcture = {0};
     CAN_InitTypeDef CAN_InitSturcture = {0};
@@ -34,23 +34,23 @@ void BPS_CAN_Base_Init(void)
     // CAN_InitSturcture.CAN_BS1 = tbs1;        // 时间段1 占用时间
     // CAN_InitSturcture.CAN_BS2 = tbs2;        // 时间段2 占用时间
     // CAN_InitSturcture.CAN_Prescaler = brp;   // 分频系数
-#if (CAN_BPS_MODE == CAN_BPS_100Kbps)
+#if (CAN_BSP_MODE == CAN_BSP_100KBSP)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_8tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_6tq;
     CAN_InitSturcture.CAN_Prescaler = 24;
-#elif (CAN_BPS_MODE == CAN_BPS_200Kbps)
+#elif (CAN_BSP_MODE == CAN_BSP_200KBSP)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_5tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_4tq;
     CAN_InitSturcture.CAN_Prescaler = 18;
-#elif (CAN_BPS_MODE == CAN_BPS_250Kbps)
+#elif (CAN_BSP_MODE == CAN_BSP_250KBSP)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_6tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_5tq;
     CAN_InitSturcture.CAN_Prescaler = 12;
-#elif (CAN_BPS_MODE == CAN_BPS_500Kbps)
+#elif (CAN_BSP_MODE == CAN_BSP_500KBSP)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_6tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_5tq;
     CAN_InitSturcture.CAN_Prescaler = 6;
-#elif (CAN_BPS_MODE == CAN_BPS_1000Kbps)
+#elif (CAN_BSP_MODE == CAN_BSP_1000KBSP)
     CAN_InitSturcture.CAN_BS1 = CAN_BS1_9tq;
     CAN_InitSturcture.CAN_BS2 = CAN_BS2_8tq;
     CAN_InitSturcture.CAN_Prescaler = 2;
@@ -72,7 +72,7 @@ void BPS_CAN_Base_Init(void)
     CAN_FilterInit( &CAN_FilterInitSturcture ); 
 }
 
-uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t* msg, uint8_t len)
+uint8_t BSP_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t* msg, uint8_t len)
 {
     uint8_t mbox;
     uint16_t i = 0;
@@ -100,7 +100,7 @@ uint8_t BPS_CAN_Send_Msg(uint8_t id, uint8_t cmd, uint8_t* msg, uint8_t len)
 }
 
 
-uint8_t BPS_CAN_Receive_Msg(uint8_t* buf)
+uint8_t BSP_CAN_Receive_Msg(uint8_t* buf)
 {
     uint8_t i;
 
@@ -120,7 +120,7 @@ uint8_t BPS_CAN_Receive_Msg(uint8_t* buf)
     return CanRxStructure.DLC;
 }
 
-void BPS_CAN_NVIC_Config(void)
+void BSP_CAN_NVIC_Config(void)
 {
     NVIC_InitTypeDef NVIC_InitStructure = {0};
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -134,17 +134,17 @@ void BPS_CAN_NVIC_Config(void)
     CAN_ITConfig(CAN1, CAN_IT_FMP0, ENABLE);  // 使能CAN1 FIFO0 中断
 }
 
-void BPS_CAN_Init(void)
+void BSP_CAN_Init(void)
 {
-    BPS_CAN_Read_ID();      // 读取设备ID
-    BPS_CAN_Base_Init();    // 初始化CAN端口
-    BPS_CAN_NVIC_Config();  // 中断管理
+    BSP_CAN_Read_ID();      // 读取设备ID
+    BSP_CAN_Base_Init();    // 初始化CAN端口
+    BSP_CAN_NVIC_Config();  // 中断管理
 }
 
 
 
 
-void BPS_CAN_Read_ID(void)
+void BSP_CAN_Read_ID(void)
 {
     uint8_t i = 0;
     i += (GPIO_ReadInputDataBit(ID0_GPIO_Port, ID0_Pin)<< 0);
@@ -155,11 +155,11 @@ void BPS_CAN_Read_ID(void)
 }
 
 /*
-//void BPS_CAN_Test_Tx(void)
+//void BSP_CAN_Test_Tx(void)
 //{
 //    static uint8_t can_test_buffer[8] = {0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02};
 //    uint8_t i = 0;
-//    BPS_CAN_Send_Msg(can_test_buffer,8);
+//    BSP_CAN_Send_Msg(can_test_buffer,8);
 //    for(i=0;i<8;++i)
 //        can_test_buffer[i]++;
 //}

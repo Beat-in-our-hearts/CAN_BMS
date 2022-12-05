@@ -1,20 +1,20 @@
 /***************************************************************** (C) COPYRIGHT  *****************************************************************
- * File Name          : BPS_flash.h
+ * File Name          : BSP_flash.h
  * Author             : lzx
  * Version            : V1.0.0
  * Date               : 2021/11/25
  * Description        : 【宏定义】  存储首地址
  *                      【全局变量】 设备类型和固件版本号 每次修改程序以写入到flash中
- *                      【函数说明】 BPS_Flash_Init          读取历史设定值，并查看是否需要写入新的设备类型和固件版本
- *                                  BPS_Flash_Read_Setting  读取设定
- *                                  BPS_Flash_Write_Setting 写入设定
+ *                      【函数说明】 BSP_Flash_Init          读取历史设定值，并查看是否需要写入新的设备类型和固件版本
+ *                                  BSP_Flash_Read_Setting  读取设定
+ *                                  BSP_Flash_Write_Setting 写入设定
  ************************************************************************************************************************************************/ 
 
-#ifndef __BPS_FLASH_H
-#define __BPS_FLASH_H
+#ifndef __BSP_FLASH_H
+#define __BSP_FLASH_H
 
 #include "debug.h"
-#include "BPS_global_define.h"
+#include "BSP_global_define.h"
 
 
 /* Global define */
@@ -40,11 +40,11 @@
 #define SETTING_START_ADDR  ((uint32_t)0x0800E000)
 
 
-void BPS_Flash_Test_Fast(void);
-void BPS_Flash_Read_Setting(CAN_BMS_Infomation_TypeDef * CAN_BMS_InfomationStructure);
-void BPS_Flash_Write_Setting(CAN_BMS_Infomation_TypeDef * CAN_BMS_InfomationStructure);
+void BSP_Flash_Test_Fast(void);
+void BSP_Flash_Read_Setting(CAN_BMS_Infomation_TypeDef * CAN_BMS_InfomationStructure);
+void BSP_Flash_Write_Setting(CAN_BMS_Infomation_TypeDef * CAN_BMS_InfomationStructure);
 
-void BPS_Flash_Init(void);
+void BSP_Flash_Init(void);
 
 
 #endif

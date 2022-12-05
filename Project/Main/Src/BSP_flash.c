@@ -1,8 +1,8 @@
-#include "BPS_flash.h"
+#include "BSP_flash.h"
 
 
 
-void BPS_Flash_Test_Fast(void)
+void BSP_Flash_Test_Fast(void)
 {
     uint8_t i, Verity_Flag = 0;
     uint32_t buf[32] = {0};
@@ -48,7 +48,7 @@ void BPS_Flash_Test_Fast(void)
     }
 }
 
-void BPS_Flash_Read_Setting(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure)
+void BSP_Flash_Read_Setting(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure)
 {
     // SETTING_START_ADDR 首地址
     uint8_t i = 0;
@@ -67,7 +67,7 @@ void BPS_Flash_Read_Setting(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStruct
     CAN_BMS_InfomationStructure->Total_Max_Power = *(float *)(SETTING_START_ADDR + 0x78);
 }
 
-void BPS_Flash_Write_Setting(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure)
+void BSP_Flash_Write_Setting(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure)
 {
     uint32_t buf[32] = {0};
     buf[0] = ((uint32_t *)(CAN_BMS_InfomationStructure->Module_Type))[0];
@@ -116,11 +116,11 @@ void BPS_Flash_Write_Setting(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStruc
     FLASH_Lock_Fast();                          // 锁
 }
 
-void BPS_Flash_Init(void) // 读取设定值 检查固件版本等
+void BSP_Flash_Init(void) // 读取设定值 检查固件版本等
 {
     uint8_t update_check_flag = 0;
     uint8_t i = 0;
-    BPS_Flash_Read_Setting(&CAN_BMS_Info);
+    BSP_Flash_Read_Setting(&CAN_BMS_Info);
     for (i = 0; i < 8; ++i) {
         if (CAN_BMS_Info.Module_Type[i] != Type_Name[i]) {
             CAN_BMS_Info.Module_Type[i] = Type_Name[i];
@@ -135,6 +135,6 @@ void BPS_Flash_Init(void) // 读取设定值 检查固件版本等
         }
     }
     if (update_check_flag) {
-        BPS_Flash_Write_Setting(&CAN_BMS_Info);
+        BSP_Flash_Write_Setting(&CAN_BMS_Info);
     }
 }

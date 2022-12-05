@@ -1,11 +1,11 @@
-#include "BPS_adc.h"
+#include "BSP_adc.h"
 
 int16_t Calibrattion_Val = 0;
 uint16_t ADC_Buffer[ADC_NBR_OF_CHANNEL] = {0};
 uint16_t ADC_Offset_Buffer[ADC_NBR_OF_CHANNEL] = {0};
 uint8_t ADC_Offset_Check_Flag = 0;  
 
-void BPS_ADC_Base_Init(void)
+void BSP_ADC_Base_Init(void)
 {
     ADC_InitTypeDef ADC_InitStructure = {0};
     GPIO_InitTypeDef GPIO_InitStructure = {0};
@@ -59,7 +59,7 @@ void BPS_ADC_Base_Init(void)
     ADC_SoftwareStartConvCmd(ADC1, ENABLE);         // 连续模式开始采集ADC
 }
 
-void BPS_DMA_ADC_Tx_Init(void)
+void BSP_DMA_ADC_Tx_Init(void)
 {
     DMA_InitTypeDef DMA_InitStructure = {0};
 
@@ -84,7 +84,7 @@ void BPS_DMA_ADC_Tx_Init(void)
 }
 
 
-void BPS_ADC_NVIC_Config(void)
+void BSP_ADC_NVIC_Config(void)
 {
     NVIC_InitTypeDef NVIC_InitStructure = {0};
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -102,17 +102,17 @@ void BPS_ADC_NVIC_Config(void)
     NVIC_Init(&NVIC_InitStructure);
 }
 
-void BPS_ADC_Init(void)
+void BSP_ADC_Init(void)
 {
-    ADC_Offset_Check_Flag = BPS_Check_All_Channel_Reset(&CAN_BMS_Info);
-    BPS_ADC_NVIC_Config();
-    BPS_DMA_ADC_Tx_Init();
-    BPS_ADC_Base_Init();
-    //// BPS_Set_ADC_Freq();
+    ADC_Offset_Check_Flag = BSP_Check_All_Channel_Reset(&CAN_BMS_Info);
+    BSP_ADC_NVIC_Config();
+    BSP_DMA_ADC_Tx_Init();
+    BSP_ADC_Base_Init();
+    //// BSP_Set_ADC_Freq();
 }
 
 /*
-// void BPS_Get_Float_ADC(uint16_t *buf, float *res)
+// void BSP_Get_Float_ADC(uint16_t *buf, float *res)
 // {
 //     res[0] = 3.3f * (buf[0] - ADC_Offset_Buffer[0])  / 4096.0f / CURRENT_GAIN / CURRENT_R1;
 //     res[1] = 3.3f * (buf[1] - ADC_Offset_Buffer[1])  / 4096.0f / CURRENT_GAIN / CURRENT_R2;
@@ -126,7 +126,7 @@ void BPS_ADC_Init(void)
 // }
 */
 
-void BPS_Get_Float_ADC(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure)
+void BSP_Get_Float_ADC(CAN_BMS_Infomation_TypeDef *CAN_BMS_InfomationStructure)
 {
     CAN_BMS_InfomationStructure->CH[0].real_time_current = 3.3f * (ADC_Buffer[0] - ADC_Offset_Buffer[0])  / 4096.0f / CURRENT_GAIN / CURRENT_R1;
     CAN_BMS_InfomationStructure->CH[1].real_time_current = 3.3f * (ADC_Buffer[1] - ADC_Offset_Buffer[1])  / 4096.0f / CURRENT_GAIN / CURRENT_R2;

@@ -29,10 +29,10 @@
 .\obj\main.o: D:\Program Files (x86)\mdk5\ARM\ARMCC\Bin\..\include\stdio.h
 .\obj\main.o: .\OLED\oled.h
 .\obj\main.o: D:\Program Files (x86)\mdk5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\obj\main.o: .\Inc\BPS_global_define.h
-.\obj\main.o: .\Inc\BPS_adc.h
-.\obj\main.o: .\Inc\BPS_gpio.h
-.\obj\main.o: .\Inc\BPS_can.h
-.\obj\main.o: .\Inc\BPS_timer.h
-.\obj\main.o: .\Inc\BPS_flash.h
-.\obj\main.o: .\Inc\BPS_control.h
+.\obj\main.o: .\Inc\BSP_global_define.h
+.\obj\main.o: .\Inc\BSP_adc.h
+.\obj\main.o: .\Inc\BSP_gpio.h
+.\obj\main.o: .\Inc\BSP_can.h
+.\obj\main.o: .\Inc\BSP_timer.h
+.\obj\main.o: .\Inc\BSP_flash.h
+.\obj\main.o: .\Inc\BSP_control.h

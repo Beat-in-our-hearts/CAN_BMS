@@ -1,5 +1,5 @@
 /***************************************************************** (C) COPYRIGHT  *****************************************************************
- * File Name          : BPS_global_define.h
+ * File Name          : BSP_global_define.h
  * Author             : lzx
  * Version            : V1.0.0
  * Date               : 2021/11/25
@@ -9,8 +9,8 @@
  *                      【全局变量】 CAN_BMS_Info 当前设备实时数据和管理信息
  *                                  Type_Name Version设备类型和固件版本号 每次修改程序以写入到flash中
  ************************************************************************************************************************************************/ 
-#ifndef __BPS_GLOBAL_DEFINE_H
-#define __BPS_GLOBAL_DEFINE_H
+#ifndef __BSP_GLOBAL_DEFINE_H
+#define __BSP_GLOBAL_DEFINE_H
 
 #include "debug.h"
 

@@ -1,8 +1,8 @@
-#include "BPS_gpio.h"
+#include "BSP_gpio.h"
 
 // uint8_t Contorl_GPIO_Status[8] = {0};
 
-void BPS_Contorl_IO_Init(void)
+void BSP_Contorl_IO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
     uint8_t i = 0;
@@ -23,11 +23,11 @@ void BPS_Contorl_IO_Init(void)
 
     // Reset All the Channel 
     for(i = 0; i < 8 ; ++i)
-        BPS_Set_Contorl_IO_Status(&CAN_BMS_Info, i, OFF);
+        BSP_Set_Contorl_IO_Status(&CAN_BMS_Info, i, OFF);
 }
 
 
-void BPS_ID_IO_Init(void)
+void BSP_ID_IO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
 
@@ -47,7 +47,7 @@ void BPS_ID_IO_Init(void)
     GPIO_Init(ID3_GPIO_Port, &GPIO_InitStructure);
 }
 
-void BPS_Set_Contorl_IO_Status(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomation, uint8_t channel_num, CH_State NewState)
+void BSP_Set_Contorl_IO_Status(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomation, uint8_t channel_num, CH_State NewState)
 {
     if( NewState == ON || NewState == OverCurrentOn ||  NewState == OverPowerOn)
     {
@@ -131,7 +131,7 @@ void BPS_Set_Contorl_IO_Status(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomation, u
     }
 }
 
-uint8_t BPS_Check_All_Channel_Reset(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomation)
+uint8_t BSP_Check_All_Channel_Reset(CAN_BMS_Infomation_TypeDef *CAN_BMS_Infomation)
 {
     uint8_t i = 0;
     for(i = 0; i < 8; ++i)

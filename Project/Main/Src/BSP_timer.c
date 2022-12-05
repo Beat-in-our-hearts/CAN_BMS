@@ -1,6 +1,6 @@
-#include "BPS_timer.h"
+#include "BSP_timer.h"
 
-void BPS_TIM2_Base_Init(void)
+void BSP_TIM2_Base_Init(void)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure = {0};
 
@@ -20,7 +20,7 @@ void BPS_TIM2_Base_Init(void)
 }
 
 
-void BPS_TIM3_Base_Init(void)
+void BSP_TIM3_Base_Init(void)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure = {0};
     
@@ -57,7 +57,7 @@ void BPS_TIM3_Base_Init(void)
     TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);  // TIM3 更新中断 使能  
 }
 
-void BPS_TIM_NVIC_Config(void)
+void BSP_TIM_NVIC_Config(void)
 {
     NVIC_InitTypeDef NVIC_InitStructure = {0};
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -75,10 +75,10 @@ void BPS_TIM_NVIC_Config(void)
     NVIC_Init(&NVIC_InitStructure);
 }
 
-void BPS_TIM_Init(void)
+void BSP_TIM_Init(void)
 {
-    BPS_TIM_NVIC_Config();
-    BPS_TIM2_Base_Init();
-    BPS_TIM3_Base_Init();
+    BSP_TIM_NVIC_Config();
+    BSP_TIM2_Base_Init();
+    BSP_TIM3_Base_Init();
 }
 

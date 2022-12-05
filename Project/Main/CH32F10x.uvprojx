@@ -403,39 +403,39 @@
               <FilePath>.\OLED\oled.c</FilePath>
             </File>
             <File>
-              <FileName>BPS_adc.c</FileName>
+              <FileName>BSP_adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Src\BPS_adc.c</FilePath>
+              <FilePath>.\Src\BSP_adc.c</FilePath>
             </File>
             <File>
-              <FileName>BPS_gpio.c</FileName>
+              <FileName>BSP_can.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Src\BPS_gpio.c</FilePath>
+              <FilePath>.\Src\BSP_can.c</FilePath>
             </File>
             <File>
-              <FileName>BPS_can.c</FileName>
+              <FileName>BSP_control.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Src\BPS_can.c</FilePath>
+              <FilePath>.\Src\BSP_control.c</FilePath>
             </File>
             <File>
-              <FileName>BPS_control.c</FileName>
+              <FileName>BSP_flash.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Src\BPS_control.c</FilePath>
+              <FilePath>.\Src\BSP_flash.c</FilePath>
             </File>
             <File>
-              <FileName>BPS_timer.c</FileName>
+              <FileName>BSP_global_define.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Src\BPS_timer.c</FilePath>
+              <FilePath>.\Src\BSP_global_define.c</FilePath>
             </File>
             <File>
-              <FileName>BPS_global_define.c</FileName>
+              <FileName>BSP_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Src\BPS_global_define.c</FilePath>
+              <FilePath>.\Src\BSP_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>BPS_flash.c</FileName>
+              <FileName>BSP_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Src\BPS_flash.c</FilePath>
+              <FilePath>.\Src\BSP_timer.c</FilePath>
             </File>
           </Files>
         </Group>
